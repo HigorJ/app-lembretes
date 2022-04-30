@@ -1,24 +1,31 @@
 import { useState } from 'react';
 import { 
   Button,
-  ScrollView,
+  FlatList,
   StyleSheet, 
   Text, 
   TextInput, 
   View, 
 } from 'react-native';
+import {  } from 'react-native-web';
 
 export default function App() {
   const [lembrete, setLembrete] = useState("");
   const [lembretes, setLembretes] = useState([]);
+  const [contador, setContador] = useState(0);
 
   const capturarLembrete = (lembreteDigitado) => {
     setLembrete(lembreteDigitado);
   }
 
   const adicionarLembrete = () => {
-    setLembretes([lembrete, ...lembretes]);
+    setLembretes([{
+      key: contador.toString(),
+      value: lembrete
+    }, ...lembretes]);
+
     setLembrete("");
+    setContador(contador + 1);
   }
   
   return (
@@ -36,15 +43,17 @@ export default function App() {
           onPress={adicionarLembrete}
         />
       </View>
-      <ScrollView>
-        {
-          lembretes.map(lembrete => (
-            <View key={lembrete} style={styles.itemNaLista}>
-              <Text>{lembrete}</Text>
-            </View>
-          ))
-        }
-      </ScrollView>
+
+      <FlatList 
+        data={lembretes}
+        renderItem={lembrete => (
+          <View 
+            style={styles.itemNaLista}
+          >
+            <Text>{lembrete.item.value}</Text>
+          </View>
+        )}
+      />
     </View>
   )
 }
