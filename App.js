@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { 
   Button,
+  ScrollView,
   StyleSheet, 
   Text, 
   TextInput, 
-  View 
+  View, 
 } from 'react-native';
 
 export default function App() {
@@ -35,15 +36,17 @@ export default function App() {
           onPress={adicionarLembrete}
         />
       </View>
-      <View>
+      <ScrollView>
         {
-          lembretes.map((lembrete) => (
-              <Text key={ lembrete }>{ lembrete }</Text>
+          lembretes.map(lembrete => (
+            <View key={lembrete} style={styles.itemNaLista}>
+              <Text>{lembrete}</Text>
+            </View>
           ))
         }
-      </View>
+      </ScrollView>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -55,5 +58,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1, 
     marginBottom: 4, 
     padding: 12 
+  },
+  itemNaLista: {
+    padding: 12,
+    backgroundColor: '#CCC',
+    borderColor: '#000',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginTop: 8
   }
 });
